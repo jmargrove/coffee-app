@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 export const SystemFlex = styled.div`
-  display: flex;
-  ${({ noFlex }) => noFlex && `flex: 1`};
+  ${({ noFlex }) => noFlex && `display: flex`};
+  ${({ flex }) => flex && `flex: ${flex}`};
+  ${({ row }) => row && `flex-direction: row`};
+  ${({ col }) => col && `flex-direction: col`};
   ${({ justify }) => justify && `justify-content: ${justify}`};
   ${({ align }) => align && `align-items: ${align}`};
 `;

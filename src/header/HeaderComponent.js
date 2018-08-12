@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { SystemSpace, SystemHeaderText } from "../system";
+
 const HeaderContainer = styled.header`
   ${({ theme }) => `background-color:${theme.colors.dark}`};
   ${({ theme }) => `height: ${theme.size.HUGE};`};
@@ -9,7 +10,7 @@ const HeaderContainer = styled.header`
 export const HeaderComponent = ({ title }) => {
   return (
     <HeaderContainer>
-      <SystemSpace size={"BIG"} />
+      <SystemSpace size={"ATOMIC"} />
       <SystemHeaderText>{title}</SystemHeaderText>
     </HeaderContainer>
   );
