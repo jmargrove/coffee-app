@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { HeaderComponent } from "./header/HeaderComponent";
+import { AnalysisScreen } from "./screens/AnalysisScreen";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./utils/theme";
 
 class App extends Component {
   render() {
     return (
-      <html>
-        <HeaderComponent title="coffee yeild" />
-      </html>
+      <ThemeProvider theme={theme}>
+        <AnalysisScreen />
+      </ThemeProvider>
     );
   }
 }

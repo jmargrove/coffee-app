@@ -1,15 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-
+import { SystemSpace, SystemHeaderText } from "../system";
 const HeaderContainer = styled.header`
-  background-color: blue;
-  height: 75px;
+  ${({ theme }) => `background-color:${theme.colors.dark}`};
+  ${({ theme }) => `height: ${theme.size.HUGE};`};
 `;
 
 export const HeaderComponent = ({ title }) => {
   return (
     <HeaderContainer>
-      <p>{title}</p>
+      <SystemSpace size={"BIG"} />
+      <SystemHeaderText>{title}</SystemHeaderText>
     </HeaderContainer>
   );
 };
