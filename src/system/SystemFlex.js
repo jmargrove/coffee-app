@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 export const SystemFlex = styled.div`
@@ -8,4 +7,5 @@ export const SystemFlex = styled.div`
   ${({ col }) => col && `flex-direction: col`};
   ${({ justify }) => justify && `justify-content: ${justify}`};
   ${({ align }) => align && `align-items: ${align}`};
+  ${({ color }) => color && `backgroun-color: ${color}`};
 `;
