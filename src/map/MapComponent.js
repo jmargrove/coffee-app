@@ -1,8 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
-import GoogleMapLoader from "react-google-maps-loader";
-import GoogleMap from "react-google-map";
-import { LoactionSearch } from "./LocationSearch";
+// import GoogleMapLoader from "react-google-maps-loader";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+
+// import { LoactionSearch } from "./LocationSearch";
+// import { observer } from "mobx-react";
+// import { observable, computed } from "../../node_modules/mobx";
 require("dotenv").config();
 
 export const MapContainer = styled.div`
@@ -11,53 +14,32 @@ export const MapContainer = styled.div`
   width: 500px;
 `;
 
-const Map = googleMaps => {
-  return (
-    googleMaps && (
-      <GoogleMap
-        googleMaps={googleMaps}
-        // coordinates={[
-        //   {
-        //     title: "Toulouse",
-        //     zoom: 8,
-        //     position: {
-        //       lat: 43.604363,
-        //       lng: 1.443363
-        //     },
-        //     onLoaded: (google, map, marker) => {
-        //       console.log("google", google);
-        //       console.log("map", map);
-        //       console.log("map", marker);
-        //     }
-        //   }
-        // ]}
-        center={{ lat: 43.604363, lng: 1.443363 }}
-        zoom={8}
-        onLoaded={(googleMaps, map) => {
-          console.log("google2", googleMaps);
-          console.log("map 2", map);
-          const input = document.getElementById("googlep-search-input");
-          const searchBox = new googleMaps.places.SearchBox(input);
-          map.addListener("bounds_changed", function() {
-            searchBox.setBounds(map.getBounds());
-          });
-          map.setMapTypeId(googleMaps.MapTypeId.SATELLITE);
-        }}
-      />
-    )
-  );
-};
+class GoogleMap extends Component {
+  render() {
+    console.log(this.props.google.maps.places);
+    const searchBox = new this.props.google.maps.places.SearchBox(input);
+    return (
+      <Map
+        style={{ width: "500px", height: "500px" }}
+        google={this.props.google}
+        zoom={14}
+      >
+        {/* <Marker onClick={this.onMarkerClick} name={"Current location"} />
+
+        <InfoWindow onClose={this.onInfoWindowClose}>
+          <div>
+            <h1>{"this.state.selectedPlace.name"}</h1>
+          </div>
+        </InfoWindow> */}
+      </Map>
+    );
+  }
+}
+
+const Mapper = GoogleApiWrapper({
+  apiKey: "AIzaSyCEuDD9MNc8PVC94FavBG4hCgSXjbGRODU"
+})(GoogleMap);
 
 export const MapComponent = () => {
-  return (
-    <MapContainer>
-      <GoogleMapLoader
-        params={{
-          key: "AIzaSyCEuDD9MNc8PVC94FavBG4hCgSXjbGRODU",
-          libraries: "places,geometry"
-        }}
-        render={Map}
-      />
-    </MapContainer>
-  );
+  return <Mapper />;
 };
