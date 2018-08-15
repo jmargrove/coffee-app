@@ -58,7 +58,7 @@ export const LoactionSearch = () => {
         <SystemFlex row noFlex>
           <MarginLeftWrapper size={"ATOMIC"}>
             <SystemInput
-              id="googlep-search-input"
+              id="google-search-input"
               type="text"
               placeholder="Search location..."
             />
