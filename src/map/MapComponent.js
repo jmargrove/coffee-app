@@ -19,7 +19,7 @@ class GoogleMap extends Component {
     super(props);
     this.state = {
       location: { lat: 0, lng: 0 },
-      viewport: { lat: 0, lng: 0 }
+      viewport: null
     };
   }
   searchBoxHandler = () => {
@@ -41,7 +41,12 @@ class GoogleMap extends Component {
     console.log(this.state.location);
     console.log(this.props.google);
     const bounds = new this.props.google.maps.LatLngBounds();
-    bounds.extend(this.state.location);
+    if (!this.state.viewport) {
+      bounds.extend(this.state.location);
+    } else {
+      bounds.union(this.state.viewport);
+    }
+
     return (
       <Map
         style={{ width: "500px", height: "500px" }}
@@ -58,7 +63,7 @@ class GoogleMap extends Component {
 }
 
 const Mapper = GoogleApiWrapper({
-  apiKey: "AIzaSyCEuDD9MNc8PVC94FavBG4hCgSXjbGRODU"
+  apiKey: process.env.REACT_APP_GOOGLE_API
 })(GoogleMap);
 
 export const MapComponent = () => {
