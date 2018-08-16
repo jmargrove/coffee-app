@@ -1,10 +1,10 @@
 export const theme = {
   colors: {
-    dark: "black",
-    lightdark: "grey",
-    darklight: "lightgrey",
-    light: "white",
-    white: "white"
+    dark: "#000100", // reg black
+    lightdark: "#A1A6B4", //quick silver
+    darklight: "#94C5CC", // dark sky blue
+    light: "#B4D2E7", // pale aqua
+    white: "#F8F8F8" // ghost white
   },
   size: {
     ATOMIC: "5px",

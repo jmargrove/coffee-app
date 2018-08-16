@@ -10,7 +10,7 @@
 /build
 
 # api keys etc
-process.env
+.env
 
 # misc
 .DS_Store

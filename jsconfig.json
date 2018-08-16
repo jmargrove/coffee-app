@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin",
+        "tags": ["styled", "css", "attrs", "extend"]
+      }
+    ],
+    "experimentalDecorators": true
+  },
+  "exclude": ["node_modules"]
+}
