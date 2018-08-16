@@ -8,7 +8,7 @@ const SearchContainer = styled.div`
 `;
 
 const SystemInput = styled.input`
-    width: 400px;
+    width: 500px;
     height: 30px
     font-size: 20px;
     border-bottom: solid;
@@ -28,32 +28,9 @@ const MarginLeftWrapper = ({ children, size }) => {
   );
 };
 
-const SystemButton = ({ onClick }) => {
-  const ButtonContainer = styled.div`
-    width: 70px;
-    height: 30px;
-    background-color: ${({ theme }) => theme.colors.lightdark};
-    border-radius: 5px;
-    &:hover {
-      background-color: ${({ theme }) => theme.colors.darklight};
-      cursor: pointer;
-    }
-  `;
-
-  return (
-    <MarginLeftWrapper size={"ATOMIC"}>
-      <ButtonContainer onClick={onClick}>
-        <SystemFlex noFlex flex={1} justify="center" align="center">
-          <SystemText>go.</SystemText>
-        </SystemFlex>
-      </ButtonContainer>
-    </MarginLeftWrapper>
-  );
-};
-
 export const LoactionSearch = () => {
   return (
-    <MarginLeftWrapper size={"SMALL"}>
+    <MarginLeftWrapper size={"ATOMIC"}>
       <SearchContainer>
         <SystemFlex row noFlex>
           <MarginLeftWrapper size={"ATOMIC"}>
@@ -63,7 +40,6 @@ export const LoactionSearch = () => {
               placeholder="Search location..."
             />
           </MarginLeftWrapper>
-          <SystemButton onClick={() => console.log("clicked")} />
         </SystemFlex>
       </SearchContainer>
     </MarginLeftWrapper>

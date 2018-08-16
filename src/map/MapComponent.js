@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { observer } from "mobx-react";
 import { action, observable } from "mobx";
 import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
+import { LoactionSearch } from "./LocationSearch";
+import { SystemFlex, SystemSpace } from "../system";
 
 const MapContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.lightdark};
@@ -17,19 +19,24 @@ export class MapComponent extends Component {
   location = { lat: 0, lng: 0 };
   @observable
   viewport = null;
+  @observable
+  searchBox = null;
 
   @action
   searchBoxHandler = () => {
-    const input = document.getElementById("google-search-input");
-    const searchBox = new this.props.google.maps.places.SearchBox(input);
-    searchBox.addListener("places_changed", () => {
-      var places = searchBox.getPlaces();
-      (this.location = places[0].geometry.location),
-        (this.viewport = places[0].geometry.viewport);
-    });
+    // const input = document.getElementById("google-search-input");
+    // const searchBox = new this.props.google.maps.places.SearchBox(input);
+    this.searchBox &&
+      this.searchBox.addListener("places_changed", () => {
+        var places = this.searchBox.getPlaces();
+        (this.location = places[0].geometry.location),
+          (this.viewport = places[0].geometry.viewport);
+      });
   };
 
   componentDidMount() {
+    const input = document.getElementById("google-search-input");
+    this.searchBox = new this.props.google.maps.places.SearchBox(input);
     navigator.geolocation.getCurrentPosition(position => {
       this.location = {
         lat: position.coords.latitude,
@@ -54,7 +61,7 @@ export class MapComponent extends Component {
         zoom={8}
         bounds={bounds}
       >
-        <Marker position={this.location} />
+        {/* <Marker position={this.location} /> */}
       </Map>
     );
   }
