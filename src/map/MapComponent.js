@@ -1,73 +1,76 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps";
 import { observer } from "mobx-react";
-import { action, observable } from "mobx";
-import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
-import { LoactionSearch } from "./LocationSearch";
-import { SystemFlex, SystemSpace } from "../system";
+import { observable } from "../../node_modules/mobx";
+import { SystemMargin } from "../system/SystemMargin";
+import { action } from "mobx";
 
-@GoogleApiWrapper({ apiKey: process.env.REACT_APP_GOOGLE_API })
+@withScriptjs
+@withGoogleMap
 @observer
-export class MapComponent extends Component {
+class MapWithAMarker extends Component {
   @observable
-  location = { lat: 0, lng: 0 };
-  @observable
-  viewport = null;
-  @observable
-  searchBox = null;
+  onStartCoords = { lat: 0, lng: 0 };
 
   @action
-  searchBoxHandler = () => {
-    this.searchBox &&
-      this.searchBox.addListener("places_changed", () => {
-        var places = this.searchBox.getPlaces();
-        this.location = places[0].geometry.location;
-        this.viewport = places[0].geometry.viewport;
-      });
-  };
-
-  componentDidMount() {
-    const input = document.getElementById("google-search-input");
-    this.searchBox = new this.props.google.maps.places.SearchBox(input);
+  handleCoords = () => {
     navigator.geolocation.getCurrentPosition(position => {
-      this.location = {
+      this.onStartCoords = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
     });
+  };
+
+  componentDidMount() {
+    this.handleCoords();
   }
 
   render() {
-    this.searchBoxHandler();
-    const bounds = new this.props.google.maps.LatLngBounds();
-    if (!this.viewport) {
-      bounds.extend(this.location);
-    } else {
-      bounds.union(this.viewport);
-    }
-
     return (
-      <MapContainer>
-        <Map
-          style={mapStyle}
-          google={this.props.google}
-          zoom={8}
-          bounds={bounds}
-        />
-      </MapContainer>
+      <GoogleMap
+        defaultZoom={8}
+        center={this.onStartCoords}
+        onClick={this.props.handleDataMovement}
+      >
+        {this.props.mapAttributes()}
+      </GoogleMap>
     );
   }
 }
 
-const MapContainer = styled.div`
-  width: 500px;
-  height: 500px;
-  overflow: hidden;
-`;
-
-const mapStyle = {
-  position: "absolute",
-  width: "500px",
-  height: "500px",
-  overflow: "hidden"
+export const MapComponent = ({ handleDataMovement, mapAttributes }) => {
+  return (
+    <SystemMargin size="SMALL">
+      <MapWithAMarker
+        mapAttributes={mapAttributes}
+        handleDataMovement={handleDataMovement}
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
+          process.env.REACT_APP_GOOGLE_API
+        }&v=3.exp&libraries=geometry,drawing,places`}
+        loadingElement={
+          <div style={{ height: `100%`, backgrounColor: "yellow" }} />
+        }
+        containerElement={
+          <div
+            style={{
+              height: `500px`,
+              width: "500px",
+              backgroundColor: "blue",
+              cursor: "pointer"
+            }}
+          />
+        }
+        mapElement={
+          <div
+            style={{
+              height: `100%`,
+              cursor: "pointer",
+              backgroundColor: "orange"
+            }}
+          />
+        }
+      />
+    </SystemMargin>
+  );
 };
