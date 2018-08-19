@@ -12,7 +12,7 @@ const SystemInput = styled.input`
     height: 30px
     font-size: 20px;
     border-bottom: solid;
-    border-bottom-color: ${({ theme }) => theme.colors.lightdark}
+    border-bottom-color: ${({ theme }) => theme.colors.dark}
     border-bottom-width: thin
 `;
 

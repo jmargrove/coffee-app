@@ -6,12 +6,6 @@ import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import { LoactionSearch } from "./LocationSearch";
 import { SystemFlex, SystemSpace } from "../system";
 
-const MapContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.lightdark};
-  height: 500px;
-  width: 500px;
-`;
-
 @GoogleApiWrapper({ apiKey: process.env.REACT_APP_GOOGLE_API })
 @observer
 export class MapComponent extends Component {
@@ -24,13 +18,11 @@ export class MapComponent extends Component {
 
   @action
   searchBoxHandler = () => {
-    // const input = document.getElementById("google-search-input");
-    // const searchBox = new this.props.google.maps.places.SearchBox(input);
     this.searchBox &&
       this.searchBox.addListener("places_changed", () => {
         var places = this.searchBox.getPlaces();
-        (this.location = places[0].geometry.location),
-          (this.viewport = places[0].geometry.viewport);
+        this.location = places[0].geometry.location;
+        this.viewport = places[0].geometry.viewport;
       });
   };
 
@@ -55,14 +47,27 @@ export class MapComponent extends Component {
     }
 
     return (
-      <Map
-        style={{ width: "500px", height: "500px" }}
-        google={this.props.google}
-        zoom={8}
-        bounds={bounds}
-      >
-        {/* <Marker position={this.location} /> */}
-      </Map>
+      <MapContainer>
+        <Map
+          style={mapStyle}
+          google={this.props.google}
+          zoom={8}
+          bounds={bounds}
+        />
+      </MapContainer>
     );
   }
 }
+
+const MapContainer = styled.div`
+  width: 500px;
+  height: 500px;
+  overflow: hidden;
+`;
+
+const mapStyle = {
+  position: "absolute",
+  width: "500px",
+  height: "500px",
+  overflow: "hidden"
+};
