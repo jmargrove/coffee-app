@@ -8,4 +8,5 @@ export const SystemFlex = styled.div`
   ${({ justify }) => justify && `justify-content: ${justify}`};
   ${({ align }) => align && `align-items: ${align}`};
   ${({ color }) => color && `background-color: ${color}`};
+  ${({ padding }) => padding && `padding: ${padding}px`};
 `;

@@ -46,8 +46,8 @@ class MapWithAMarker extends Component {
 }
 
 const MapContainer = styled.div`
-  width: 1000px;
-  height: 750px;
+  width: 1400px;
+  height: 825px;
 `;
 
 export const MapComponent = ({ handleDataMovement, mapAttributes }) => {

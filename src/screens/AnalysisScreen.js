@@ -9,7 +9,8 @@ import { observer } from "mobx-react";
 import styled from "styled-components";
 import { Marker, Polygon } from "react-google-maps";
 import { DataPresentation } from "../data-pressentation/DataPresentation";
-
+import Drawer from "@material-ui/core/Drawer";
+import Input from "@material-ui/core/Input";
 // const MapWithSearch = () => {
 //   return (
 //     <div>
@@ -25,25 +26,34 @@ export class AnalysisScreen extends Component {
   dataType = "POINT";
   @observable
   dataCoords = { lat: 0, lng: 0 };
+  @observable
+  searchOn = false;
 
   @action
-  handleDataMovement = coords => {
-    this.dataCoords = { lat: coords.latLng.lat(), lng: coords.latLng.lng() };
+  handleOnSearch = () => {
+    console.log("this is on now...");
+    this.searchOn = !this.searchOn;
   };
 
-  @action
-  handleDataType = type => {
-    this.dataType = type;
-  };
+  // @action
+  // handleDataMovement = coords => {
+  //   this.dataCoords = { lat: coords.latLng.lat(), lng: coords.latLng.lng() };
+  // };
 
-  poly = [{ lat: 0.0, lng: 5 }, { lat: 5, lng: 5 }, { lat: 0.0, lng: 0 }];
+  // @action
+  // handleDataType = type => {
+  //   this.dataType = type;
+  // };
+
+  // poly = [{ lat: 0.0, lng: 5 }, { lat: 5, lng: 5 }, { lat: 0.0, lng: 0 }];
 
   render() {
     return (
       <div>
         <HeaderComponent title="Coffee yeild generator" />
         <SystemFlex row noFlex>
-          <AnalysisTools handleDataType={this.handleDataType} />
+          <AnalysisTools handleOnSearch={this.handleOnSearch} />
+          <SearchPanel open={this.searchOn} onClose={this.handleOnSearch} />
           <div>
             <MapComponent
               mapAttributes={() => (
@@ -59,3 +69,21 @@ export class AnalysisScreen extends Component {
     );
   }
 }
+
+const SearchPanel = ({ open, onClose }) => {
+  return (
+    <Drawer
+      open={open}
+      onClose={onClose}
+      // style={{
+      //   width: "200px",
+      //   top: "75px",
+      //   left: "65px",
+      //   height: "750px",
+      //   backgroundColor: "yellow"
+      // }}
+    >
+      <Input placeholder="search location" />
+    </Drawer>
+  );
+};

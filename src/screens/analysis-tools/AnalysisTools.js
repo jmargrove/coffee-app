@@ -1,88 +1,47 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { SystemFlex, SystemText } from "../../system";
+import { SystemFlex, SystemText, SystemSpace } from "../../system";
 import { SystemMargin } from "../../system/SystemMargin";
 import { observer } from "../../../node_modules/mobx-react";
 import { observable, action } from "../../../node_modules/mobx";
 import { LoactionSearch } from "../../map/LocationSearch";
 
-const AnalysisToolsContainer = styled.div`
-  width: 440px;
-  height: 750px;
-  background-color: ${({ theme }) => theme.colors.darklight};
-  ${({ hide }) => hide && `overflow: hidden`};
-  ${({ hide }) => hide && `width: 5px`};
-`;
+import Button from "@material-ui/core/Button";
+import LineWeightIcon from "@material-ui/icons/LineWeight";
+import SettingsIcon from "@material-ui/icons/Settings";
+import SearchIcon from "@material-ui/icons/Search";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 
-const AnalysisToolsElementContainer = styled.div`
-  height: 50px;
-  border: solid;
-  background-color: ${({ theme }) => theme.colors.white};
-  border-color: black;
-  border-width: thin;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.lightdark};
-    cursor: pointer;
-  }
-`;
-
-const ToolBarHeaderContainer = styled.div`
-  height: 30px;
-  border-bottom: solid;
-  border-bottom-color: black;
-  border-bottom-width: thin;
+const SystemButton = styled(Button)`
+  margin: 0;
+  padding: 0;
+  height: 65px;
+  width: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const ToolBarHeader = () => {
+const StyledButtonIcon = ({ Icon, onClick }) => {
   return (
-    <SystemMargin size={"SMALL"} botOff>
-      <ToolBarHeaderContainer>
-        <div>Tools</div>
-      </ToolBarHeaderContainer>
-    </SystemMargin>
+    <SystemFlex justify="center" align="center">
+      <SystemButton onClick={onClick}>
+        <Icon
+          style={{
+            color: "white",
+            width: "35px",
+            height: "35px",
+            padding: 0,
+            margin: 0
+          }}
+        />
+      </SystemButton>
+      <div
+        style={{ width: "55px", height: "1px", backgroundColor: "#85BDBF" }}
+      />
+      <SystemSpace size="BIG" />
+    </SystemFlex>
   );
-};
-
-const AnalysisToolsElement = ({ name, onClick }) => {
-  return (
-    <SystemMargin size={"SMALL"} botOff>
-      <AnalysisToolsElementContainer onClick={onClick}>
-        <SystemText>{name}</SystemText>
-      </AnalysisToolsElementContainer>
-    </SystemMargin>
-  );
-};
-
-const analysisToolButtonData = [
-  { name: "point", type: "POINT" },
-  { name: "polygon", type: "POLYGON" }
-];
-
-const DrawerButtonContainer = styled.div`
-  position: relative;
-  top: 200px;
-  right: 5px;
-  border-radius: 5px;
-  width: 10px;
-  height: 10px;
-  background-color: ${({ theme }) => theme.colors.lightdark};
-  border: solid;
-  border-color: black;
-  border-width: thin;
-  &:hover {
-    background-color: white;
-  }
-`;
-
-const DrawerButton = ({ onClick }) => {
-  return <DrawerButtonContainer onClick={onClick} />;
 };
 
 @observer
@@ -96,25 +55,20 @@ export class AnalysisTools extends Component {
   };
 
   render() {
-    const { handleDataType } = this.props;
+    const { handleOnSearch } = this.props;
     return (
-      <AnalysisToolsContainer hide={this.hide}>
-        <LoactionSearch />
-        <ToolBarHeader />
-        {analysisToolButtonData.map(data => {
-          return (
-            <AnalysisToolsElement
-              key={data.name}
-              name={data.name}
-              type={data.type}
-              onClick={() => {
-                handleDataType(data.type);
-              }}
-            />
-          );
-        })}
-        <DrawerButton onClick={this.handleDrawer} />
-      </AnalysisToolsContainer>
+      <ToolBar>
+        <StyledButtonIcon Icon={LineWeightIcon} />
+        <StyledButtonIcon onClick={handleOnSearch} Icon={SearchIcon} />
+        <StyledButtonIcon Icon={SettingsIcon} />
+        <StyledButtonIcon Icon={BookmarkBorderIcon} />
+      </ToolBar>
     );
   }
 }
+
+const ToolBar = styled.div`
+  width: 65px;
+  height: 825px;
+  ${({ theme }) => theme && `background-color: ${theme.colors.dark}`};
+`;
