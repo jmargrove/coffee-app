@@ -72,18 +72,12 @@ export class AnalysisScreen extends Component {
 
 const SearchPanel = ({ open, onClose }) => {
   return (
-    <Drawer
-      open={open}
-      onClose={onClose}
-      // style={{
-      //   width: "200px",
-      //   top: "75px",
-      //   left: "65px",
-      //   height: "750px",
-      //   backgroundColor: "yellow"
-      // }}
-    >
-      <Input placeholder="search location" />
+    <Drawer open={open} onClose={onClose}>
+      <SystemFlex row padding={25}>
+        {/* <SystemSpace size="SMALL" /> */}
+        <Input placeholder="Search location" style={{ width: "350px" }} />
+        {/* <SystemSpace size="SMALL" /> */}
+      </SystemFlex>
     </Drawer>
   );
 };

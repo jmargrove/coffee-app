@@ -70,5 +70,6 @@ export class AnalysisTools extends Component {
 const ToolBar = styled.div`
   width: 65px;
   height: 825px;
+  z-index: 55;
   ${({ theme }) => theme && `background-color: ${theme.colors.dark}`};
 `;
