@@ -2,8 +2,8 @@ export const theme = {
   colors: {
     dark: "#010101", // reg black
     lightdark: "#A1A6B4", //quick silver
-    darklight: "#94C5CC", // dark sky blue
-    light: "#B4D2E7", // pale aqua
+    darklight: "#A86F9F", // dark sky blue
+    light: "#92374D", // pale aqua
     white: "#F8F8F8" // ghost white
   },
   size: {

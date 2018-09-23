@@ -7,86 +7,17 @@ import { AnalysisTools } from "./analysis-tools/AnalysisTools";
 import { observable, action } from "../../node_modules/mobx";
 import { observer } from "mobx-react";
 import styled from "styled-components";
-import { Marker } from "react-google-maps";
+import { Marker, Polygon } from "react-google-maps";
+import { DataPresentation } from "../data-pressentation/DataPresentation";
 
-const MapWithSearch = () => {
-  return (
-    <div>
-      <LoactionSearch />
-      <MapComponent />
-    </div>
-  );
-};
-
-const DataPresentationContainer = styled.div`
-  width: 800px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  border: solid;
-  border-width: thin;
-  border-color: ${({ theme }) => theme.colors.lightdark};
-`;
-
-const ToolBarHeaderContainer = styled.div`
-  width: 500px;
-  height: 30px;
-  border-bottom: solid;
-  border-bottom-color: black;
-  border-bottom-width: thin;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ToolBarHeader = () => {
-  return (
-    <SystemMargin size={"SMALL"} botOff>
-      <ToolBarHeaderContainer>
-        <div>Data</div>
-      </ToolBarHeaderContainer>
-    </SystemMargin>
-  );
-};
-
-const Cell = styled.div`
-  width: 200px;
-  height: 30px;
-  border: solid;
-  border-width: thin;
-  border-color: ${({ theme }) => theme.colors.lightdark};
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.light};
-  }
-`;
-
-const DataPresentation = ({ dataCoords }) => {
-  return (
-    <div>
-      <ToolBarHeader />
-      <DataPresentationContainer>
-        <Cell>{dataCoords.lat}</Cell>
-        <Cell>{dataCoords.lng}</Cell>
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-        <Cell />
-      </DataPresentationContainer>
-    </div>
-  );
-};
+// const MapWithSearch = () => {
+//   return (
+//     <div>
+//       <LoactionSearch />
+//       <MapComponent />
+//     </div>
+//   );
+// };
 
 @observer
 export class AnalysisScreen extends Component {
@@ -105,6 +36,8 @@ export class AnalysisScreen extends Component {
     this.dataType = type;
   };
 
+  poly = [{ lat: 0.0, lng: 5 }, { lat: 5, lng: 5 }, { lat: 0.0, lng: 0 }];
+
   render() {
     return (
       <div>
@@ -112,14 +45,15 @@ export class AnalysisScreen extends Component {
         <SystemFlex row noFlex>
           <AnalysisTools handleDataType={this.handleDataType} />
           <div>
-            <LoactionSearch />
             <MapComponent
-              mapAttributes={() => <Marker position={this.dataCoords} />}
+              mapAttributes={() => (
+                <Polygon draggable={true} path={this.poly} />
+              )}
               dataType={this.dataType}
               handleDataMovement={this.handleDataMovement}
             />
           </div>
-          <DataPresentation dataCoords={this.dataCoords} />
+          {/* <DataPresentation dataCoords={this.dataCoords} /> */}
         </SystemFlex>
       </div>
     );

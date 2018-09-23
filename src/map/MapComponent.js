@@ -1,9 +1,15 @@
 import React, { Component } from "react";
-import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps";
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Polygon
+} from "react-google-maps";
 import { observer } from "mobx-react";
 import { observable } from "../../node_modules/mobx";
 import { SystemMargin } from "../system/SystemMargin";
 import { action } from "mobx";
+import styled from "styled-components";
 
 @withScriptjs
 @withGoogleMap
@@ -39,38 +45,34 @@ class MapWithAMarker extends Component {
   }
 }
 
+const MapContainer = styled.div`
+  width: 1000px;
+  height: 750px;
+`;
+
 export const MapComponent = ({ handleDataMovement, mapAttributes }) => {
   return (
-    <SystemMargin size="SMALL">
-      <MapWithAMarker
-        mapAttributes={mapAttributes}
-        handleDataMovement={handleDataMovement}
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
-          process.env.REACT_APP_GOOGLE_API
-        }&v=3.exp&libraries=geometry,drawing,places`}
-        loadingElement={
-          <div style={{ height: `100%`, backgrounColor: "yellow" }} />
-        }
-        containerElement={
-          <div
-            style={{
-              height: `500px`,
-              width: "500px",
-              backgroundColor: "blue",
-              cursor: "pointer"
-            }}
-          />
-        }
-        mapElement={
-          <div
-            style={{
-              height: `100%`,
-              cursor: "pointer",
-              backgroundColor: "orange"
-            }}
-          />
-        }
-      />
-    </SystemMargin>
+    // <SystemMargin size="SMALL">
+    <MapWithAMarker
+      mapAttributes={mapAttributes}
+      handleDataMovement={handleDataMovement}
+      googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${
+        process.env.REACT_APP_GOOGLE_API
+      }&v=3.exp&libraries=geometry,drawing,places`}
+      loadingElement={
+        <div style={{ height: `100%`, backgrounColor: "yellow" }} />
+      }
+      containerElement={<MapContainer />}
+      mapElement={
+        <div
+          style={{
+            height: `100%`,
+            cursor: "pointer",
+            backgroundColor: "orange"
+          }}
+        />
+      }
+    />
+    // </SystemMargin>
   );
 };

@@ -6,6 +6,7 @@ require("dotenv").config();
 
 class App extends Component {
   render() {
+    console.log("WINDOW", window);
     return (
       <ThemeProvider theme={theme}>
         <AnalysisScreen />

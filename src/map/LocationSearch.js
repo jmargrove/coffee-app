@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { SystemMargin } from "../system/SystemMargin";
 
 const SystemInput = styled.input`
-    width: 500px;
-    height: 30px
+    width: 400px;
+    height: 35px
     font-size: 20px;
     border-bottom: solid;
     border-bottom-color: ${({ theme }) => theme.colors.dark}

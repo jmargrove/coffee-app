@@ -1,15 +1,20 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import { SystemFlex, SystemText } from "../../system";
 import { SystemMargin } from "../../system/SystemMargin";
+import { observer } from "../../../node_modules/mobx-react";
+import { observable, action } from "../../../node_modules/mobx";
+import { LoactionSearch } from "../../map/LocationSearch";
 
 const AnalysisToolsContainer = styled.div`
+  width: 440px;
   height: 750px;
   background-color: ${({ theme }) => theme.colors.darklight};
+  ${({ hide }) => hide && `overflow: hidden`};
+  ${({ hide }) => hide && `width: 5px`};
 `;
 
 const AnalysisToolsElementContainer = styled.div`
-  width: 100px;
   height: 50px;
   border: solid;
   background-color: ${({ theme }) => theme.colors.white};
@@ -18,6 +23,7 @@ const AnalysisToolsElementContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   &:hover {
     background-color: ${({ theme }) => theme.colors.lightdark};
     cursor: pointer;
@@ -25,7 +31,6 @@ const AnalysisToolsElementContainer = styled.div`
 `;
 
 const ToolBarHeaderContainer = styled.div`
-  width: 100px;
   height: 30px;
   border-bottom: solid;
   border-bottom-color: black;
@@ -60,23 +65,56 @@ const analysisToolButtonData = [
   { name: "polygon", type: "POLYGON" }
 ];
 
-export const AnalysisTools = ({ handleDataType }) => {
-  return (
-    <AnalysisToolsContainer>
-      <ToolBarHeader />
-      {analysisToolButtonData.map(data => {
-        return (
-          <AnalysisToolsElement
-            key={data.name}
-            name={data.name}
-            type={data.type}
-            onClick={() => {
-              // console.log("clicked", data.type);
-              handleDataType(data.type);
-            }}
-          />
-        );
-      })}
-    </AnalysisToolsContainer>
-  );
+const DrawerButtonContainer = styled.div`
+  position: relative;
+  top: 200px;
+  right: 5px;
+  border-radius: 5px;
+  width: 10px;
+  height: 10px;
+  background-color: ${({ theme }) => theme.colors.lightdark};
+  border: solid;
+  border-color: black;
+  border-width: thin;
+  &:hover {
+    background-color: white;
+  }
+`;
+
+const DrawerButton = ({ onClick }) => {
+  return <DrawerButtonContainer onClick={onClick} />;
 };
+
+@observer
+export class AnalysisTools extends Component {
+  @observable
+  hide = false;
+
+  @action
+  handleDrawer = () => {
+    this.hide = !this.hide;
+  };
+
+  render() {
+    const { handleDataType } = this.props;
+    return (
+      <AnalysisToolsContainer hide={this.hide}>
+        <LoactionSearch />
+        <ToolBarHeader />
+        {analysisToolButtonData.map(data => {
+          return (
+            <AnalysisToolsElement
+              key={data.name}
+              name={data.name}
+              type={data.type}
+              onClick={() => {
+                handleDataType(data.type);
+              }}
+            />
+          );
+        })}
+        <DrawerButton onClick={this.handleDrawer} />
+      </AnalysisToolsContainer>
+    );
+  }
+}
