@@ -10,7 +10,7 @@ const HeaderContainer = styled.header`
 export const HeaderComponent = ({ title }) => {
   return (
     <HeaderContainer>
-      <SystemSpace size={"ATOMIC"} />
+      <SystemSpace size={"SMALL"} />
       <SystemFlex row noFlex>
         <SystemSpace size={"SMALL"} />
         <SystemHeaderText>{title}</SystemHeaderText>

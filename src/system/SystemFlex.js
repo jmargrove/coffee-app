@@ -7,5 +7,6 @@ export const SystemFlex = styled.div`
   ${({ col }) => col && `flex-direction: col`};
   ${({ justify }) => justify && `justify-content: ${justify}`};
   ${({ align }) => align && `align-items: ${align}`};
-  ${({ color }) => color && `backgroun-color: ${color}`};
+  ${({ color }) => color && `background-color: ${color}`};
+  ${({ padding }) => padding && `padding: ${padding}px`};
 `;
