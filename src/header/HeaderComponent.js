@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { SystemSpace, SystemHeaderText, SystemFlex } from "../system";
+import {
+  SystemSpace,
+  SystemHeaderText,
+  SystemFlex,
+  SystemText
+} from "../system";
 import Avatar from "@material-ui/core/Avatar";
 import classNames from "classnames";
 
@@ -27,6 +32,7 @@ export const HeaderComponent = ({ title }) => {
           src={require("../assets/10_woman D.jpg")}
           style={{ width: "60px", height: "60px" }}
         />
+        <SystemText size={12}>Name: Sofia Rios</SystemText>
         <SystemSpace size="SMALL" />
       </SystemFlex>
     </HeaderContainer>
