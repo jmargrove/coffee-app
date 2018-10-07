@@ -2,23 +2,17 @@ import React, { Component } from "react";
 import { HeaderComponent } from "../header/HeaderComponent";
 import { MapComponent } from "../map/MapComponent";
 import { SystemSpace, SystemFlex, SystemMargin } from "../system";
-import { LoactionSearch } from "../map/LocationSearch";
+import {
+  LoactionSearch,
+  PlacesWithStandaloneSearchBox
+} from "../map/LocationSearch";
 import { AnalysisTools } from "./analysis-tools/AnalysisTools";
 import { observable, action } from "../../node_modules/mobx";
 import { observer } from "mobx-react";
 import styled from "styled-components";
 import { Marker, Polygon } from "react-google-maps";
 import { DataPresentation } from "../data-pressentation/DataPresentation";
-import Drawer from "@material-ui/core/Drawer";
 import Input from "@material-ui/core/Input";
-// const MapWithSearch = () => {
-//   return (
-//     <div>
-//       <LoactionSearch />
-//       <MapComponent />
-//     </div>
-//   );
-// };
 
 @observer
 export class AnalysisScreen extends Component {
@@ -70,14 +64,33 @@ export class AnalysisScreen extends Component {
   }
 }
 
+const SystemDrawer = styled.div`
+  background-color: rgba(255, 255, 255);
+  width: 350px;
+  height: 750px;
+  position: absolute;
+  left: 65px;
+  top: 75px;
+  z-index: 55;
+`;
+
 const SearchPanel = ({ open, onClose }) => {
-  return (
-    <Drawer open={open} onClose={onClose}>
-      <SystemFlex row padding={25}>
-        {/* <SystemSpace size="SMALL" /> */}
-        <Input placeholder="Search location" style={{ width: "350px" }} />
-        {/* <SystemSpace size="SMALL" /> */}
-      </SystemFlex>
-    </Drawer>
-  );
+  if (open) {
+    return (
+      <SystemDrawer open={open} onClose={onClose}>
+        <SystemFlex row padding={25}>
+          {/* <StandaloneSearchBox> */}
+          <PlacesWithStandaloneSearchBox />
+          {/* <Input
+            autoFocus={true}
+            placeholder="Search location"
+            fullWidth={true}
+          /> */}
+          {/* <SystemSpace size="SMALL" /> */}
+        </SystemFlex>
+      </SystemDrawer>
+    );
+  } else {
+    return null;
+  }
 };

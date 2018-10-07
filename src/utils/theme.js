@@ -9,6 +9,7 @@ export const theme = {
   size: {
     ATOMIC: "2.5px",
     SMALL: "5PX",
+    REGULAR: "10px",
     BIG: "25PX",
     LARGE: "50PX",
     HUGE: "75PX"
